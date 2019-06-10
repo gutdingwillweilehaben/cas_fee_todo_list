@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Merriweather:300,300i,700,700i&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <title>Todo Liste</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+
+    <script src="../assets/js/init/model/model.js"></script>
+    <script src="../assets/js/init/data/data.js"></script>
+    <script src="../assets/js/init/controller/controller.js"></script>
+    <script src="../assets/js/init/view/handlebars.js"></script>
+
+
+    <script id="list-template" type="text/x-handlebars-template">
+        <ul class="list__inner-wrap">
+            {{#each this}}
+
+            <li class="list__task">
+                <input id="done-{{id}}" data-id="{{id}}" type="checkbox" class="list__task-done" {{done}}>
+                <label for="done-{{id}}" class="list__task-title">{{title}}</label>
+                {{#if description}}
+                    <span class="list__task-info">{{description}}</span>
+                {{/if}}
+                {{#if prio}}
+                    <span class="list__task-prio">{{prio}}</span>
+                {{/if}}
+                {{#if dueDate}}
+                    <span class="list__task-due-date">{{dueDate}}</span>
+                {{/if}}
+                <a data-src="#task-{{id}}" class="btn btn--edit">Edit</a>
+                <a data-id="{{id}}" class="btn btn--remove">Remove</a>
+            </li>
+
+            <div class="list-item__edit">
+                <form class="list-item__edit-form" id="task-{{id}}" data-id="{{id}}">
+                    <fieldset class="list-item__title">
+                        <label for="title">Titel</label>
+                        <input type="text" name="title" id="title" value={{title}}>
+                    </fieldset>
+                    <fieldset class="list-item__info">
+                        <label for="description">Beschreibung</label>
+                        <textarea name="description" id="description">{{description}}</textarea>
+                    </fieldset>
+                    <fieldset class="list-item__prio">
+                        <label for="prio1">Prio</label>
+                        <input type="radio" name="prio" id="prio1" value="1" {{{setChecked 1 prio}}}>
+                        <input type="radio" name="prio" id="prio2" value="2" {{{setChecked 2 prio}}}>
+                        <input type="radio" name="prio" id="prio3" value="3" {{{setChecked 3 prio}}}>
+                        <input type="radio" name="prio" id="prio4" value="4" {{{setChecked 4 prio}}}>
+                        <input type="radio" name="prio" id="prio5" value="5" {{{setChecked 5 prio}}}>
+                    </fieldset>
+                    <fieldset class="list-item__date">
+                        <label for="date">Erledigen bis</label>
+                        <input type="date" name="date" id="date" value="{{dueDate}}">
+                    </fieldset>
+
+                    <button type="submit" class="btn" value="Speichern">Speichern</button>
+                    <button type="reset" class="btn">Abbrechen</button>
+                </form>
+            </div>
+            {{/each}}
+        </ul>
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header__title">Todo List</div>
+            <div class="header__change-style" id="js-change-style"></div>
+        </header>
+        <div class="content">
+            <nav class="nav">
+                <ul class="nav__inner-wrap">
+                    <li class="nav__item nav__item-inbox">Inbox</li>
+                    <li class="nav__item nav__item-all-tasks">Alle Aufgaben</li>
+                    <li class="nav__item nav__item-prio">Priorität</li>
+                    <li class="nav__item-show-down">
+                        <input type="checkbox" id="completedTasks" name="completedTasks" checked="checked">
+                        <label for="completedTasks">Erledigte Tasks anzeigen</label>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="list"></div>
+
+            <div class="btn--add-task" id="js-add-task"><img src="../assets/img/icons/add-white.svg" alt="Add Task"></div>
+
+            <div class="add-task">
+                <form id="js-add-task-form" class="add-task-form">
+                    <fieldset class="list-item__title">
+                        <label for="title">Titel</label>
+                        <input type="text" name="title" id="new-title" value="" required>
+                    </fieldset>
+                    <fieldset class="list-item__info">
+                        <label for="description">Beschreibung</label>
+                        <textarea name="description" id="new-description"></textarea>
+                    </fieldset>
+                    <fieldset class="list-item__prio">
+                        <label for="prio1">Prio</label>
+                        <input type="radio" name="prio" id="new-prio1" value="1">
+                        <input type="radio" name="prio" id="new-prio2" value="2">
+                        <input type="radio" name="prio" id="new-prio3" value="3">
+                        <input type="radio" name="prio" id="new-prio4" value="4">
+                        <input type="radio" name="prio" id="new-prio5" value="5">
+                    </fieldset>
+                    <fieldset class="list-item__date">
+                        <label for="date">Erledigen bis</label>
+                        <input type="date" name="date" id="new-date" value="">
+                    </fieldset>
+
+                    <button type="submit" class="btn" value="Speichern">Speichern</button>
+                    <button type="reset" class="btn">Abbrechen</button>
+                </form>
+            </div>
+        </div>
+        <footer class="footer">Cindy Gut – CAS FEE Projekt 1</footer>
+    </div>
+</body>
+</html>
