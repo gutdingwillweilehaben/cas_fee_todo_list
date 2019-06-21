@@ -1,36 +1,30 @@
-function addTask(event) {
+function addTask(e) {
     // Define Task ID of new Task
     let taskId = 0;
+
     if (localStorage.getItem('tasks')) {
         let tasksFromLocalStorage = localStorage.getItem('tasks');
         let tasksFromLocalStorageArray = JSON.parse(tasksFromLocalStorage);
-        taskId = tasksFromLocalStorageArray.length;
+        let lastTask = tasksFromLocalStorageArray[tasksFromLocalStorageArray.length - 1];
+        taskId = parseInt(lastTask.id) + 1;
     }
 
-    // Create new Task
     let newTask = {};
     newTask.id = String(taskId);
-    newTask.title = event.target.title.value;
-    newTask.description = event.target.description.value;
-    newTask.prio = event.target.prio.value;
+    newTask.title = e.target.title.value;
+    newTask.description = e.target.description.value;
+    newTask.prio = e.target.prio.value;
     newTask.done = "";
     newTask.createdDate = Date.now();
-    newTask.dueDate = event.target.date.value ? event.target.date.value : undefined;
-    newTask.completedDate = undefined;
-
-
-    console.log("Add Task");
+    newTask.dueDate = e.target.date.value ? e.target.date.value : undefined;
+    newTask.completedDate = "";
+    tasks.push(newTask);
 }
 
 
-function removeTask() {
-    if(tasks.length > 1) {
-        tasks.splice(event.target.dataset.id, 1);
-        console.log("Remove Task")
-    } else {
-        tasks.splice( -1, 1);
-        console.log("Remove last Task")
-    }
+function removeTaskbyId(id) {
+    let indexInTasks = tasks.findIndex(x => x.id === id);
+    tasks.splice(indexInTasks, 1);
 }
 
 function compareTasksPrio(s1, s2) {
@@ -58,6 +52,43 @@ function tasksSortedCreatedDate(){
     return [...tasks].sort(compareTasksCreatedDate);
 }
 
+function checkTaskById(id) {
+    tasks.forEach(function (task) {
+        if (task.id === id) {
+            task.done = task.done === "checked" ? "" : "checked";
+            task.completedDate = Date.now();
+        }
+    })
+}
+
+
+function getTaskbyId(id) {
+    return tasks.find(x => x.id === id);
+}
+
+function updateTask(e) {
+
+    let task = getTaskbyId(e.target.dataset.id);
+
+    task.title = e.target.title.value;
+    task.description = e.target.description.value;
+    task.dueDate = e.target.date.value;
+
+    let prios = [
+        { prio: e.target.prio1 },
+        { prio: e.target.prio2 },
+        { prio: e.target.prio3 },
+        { prio: e.target.prio4 },
+        { prio: e.target.prio5 }
+    ];
+
+    for (let prio of prios) {
+        if (prio.prio.checked === true) {
+            task.prio = prio.prio.value;
+        }
+    }
+}
+
 
 /*
 class Task {
@@ -72,7 +103,7 @@ class Task {
         this.completedDate = completedDate || undefined;
     }
 
-    addTask(event) {
+    addTask(e) {
         const newTask = new Task();
         tasks.push(newTask);
 
@@ -80,4 +111,5 @@ class Task {
 }
 
 
-console.log(new Task(5, "Cindy", "Test"));*/
+console.log(new Task(5, "Cindy", "Test"));
+*/

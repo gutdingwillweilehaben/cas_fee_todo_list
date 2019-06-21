@@ -27,10 +27,11 @@ fieldset {
 
 .btn {
     border: none;
-    padding: rem(4px);
+    padding: rem(4px) rem(8px);
     background-color: $black;
     color: $white;
     cursor: pointer;
+    margin-left: rem(12px);
 }
 
 .content {
@@ -38,6 +39,9 @@ fieldset {
     grid-template-columns: 280px auto;
     grid-column-gap: 16px;
     min-height: calc(100vh - 95px);
+    @include mobile {
+        grid-template-columns: 48px auto;
+    }
 }
 
 .btn--add-task {

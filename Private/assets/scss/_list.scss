@@ -4,8 +4,14 @@
     @include ulreset();
     @include font-copy();
     .list__task {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
       border-bottom: rem(1px) solid $darkgrey;
       padding: rem(8px);
+      &.hide {
+        display: none;
+      }
       input {
         position: absolute;
         z-index: -1;
@@ -42,7 +48,13 @@
         text-overflow: ellipsis;
         overflow: hidden;
         display: inline-block;
-        width: 50%;
+        min-width: 40%;
+        flex-grow: 1;
+        .list__task-completedDate {
+          font-size: 12px;
+          display: inline-block;
+          margin-left: 8px;
+        }
       }
       .list__task-info {
         @include font-copy-sml();
@@ -82,7 +94,7 @@
         }
       }
     }
-    .list-item__edit {
+    .list__task-edit {
       background-color: $black-transparent;
       width: 100%;
       height: 100%;
@@ -100,22 +112,34 @@
         @include font-copy();
         background-color: $white;
         padding: rem(32px);
+        min-width: 50vw;
+        label {
+          display: block;
+          font-size: 14px;
+        }
+        fieldset {
+          margin-bottom: 16px;
+        }
+        input[type='text'] {
+          width: 100%;
+          padding: rem(6px) rem(8px);
+          border: 1px solid $darkgrey;
+        }
+        input[type='date'] {
+          width: 100%;
+          padding: rem(6px) rem(8px);
+          border: 1px solid $darkgrey;
+        }
+        textarea {
+          width: 100%;
+          padding: rem(6px) rem(8px);
+          border: 1px solid $darkgrey;
+        }
+        input[type='radio'] {
+          margin-right: rem(10px);
+        }
       }
     }
-    .list__task {
-      display: flex;
-      flex-wrap: wrap;
-      .list__task-btn-wrap {
-        justify-content: flex-end;
-      }
-    }
-  }
-}
-
-
-body {
-  &.edit {
-    border: 1px solid red;
   }
 }
 
@@ -135,5 +159,31 @@ body {
     @include font-copy();
     background-color: $white;
     padding: rem(32px);
+    min-width: 50vw;
+    label {
+      display: block;
+      font-size: 14px;
+    }
+    fieldset {
+      margin-bottom: 16px;
+    }
+    input[type='text'] {
+      width: 100%;
+      padding: rem(6px) rem(8px);
+      border: 1px solid $darkgrey;
+    }
+    input[type='date'] {
+      width: 100%;
+      padding: rem(6px) rem(8px);
+      border: 1px solid $darkgrey;
+    }
+    textarea {
+      width: 100%;
+      padding: rem(6px) rem(8px);
+      border: 1px solid $darkgrey;
+    }
+    input[type='radio'] {
+      margin-right: rem(10px);
+    }
   }
 }

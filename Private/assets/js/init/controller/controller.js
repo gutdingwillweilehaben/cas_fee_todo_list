@@ -2,9 +2,7 @@
 
 let tasks = [];
 
-
 getDataFromLocalStorage();
-
 
 ready(function () {
 
@@ -16,149 +14,121 @@ ready(function () {
     let taskList = document.querySelector(".list");
 
 
+    let changeStyle = document.querySelector("#js-change-style");
+    let body = document.querySelector('body');
+
+    changeStyle.addEventListener('click', (e) => {
+        if (body.classList.contains("style-1")) {
+            body.classList.remove('style-1');
+            deleteCookie('style');
+        } else {
+            body.classList.add('style-1');
+            setCookie('style', 'style1', 10);
+        }
+    });
+
+    if (getCookie('style')) {
+        body.classList.add('style-1');
+    }
+
+    if (getCookie('hideDone')) {
+        document.getElementById('completedTasks').checked = false;
+    }
+
+    const newTaskButton = document.querySelector('#js-add-task');
+    newTaskButton.addEventListener("click", function (e) {
+        e.target.parentNode.nextElementSibling.classList.add("show");
+
+
+        let openLightboxAdd = document.querySelector('.add-task.show');
+
+        if (openLightboxAdd) {
+            openLightboxAdd.addEventListener('click', function (e) {
+
+                if (e.target.type === "reset") {
+                    openLightboxAdd.classList.remove('show');
+                }
+
+                if (e.target.classList.contains('show')) {
+                    e.target.childNodes[1].reset();
+                    e.target.classList.remove('show');
+                }
+            });
+        }
+
+    });
+
+
+    // Event-Bubbling
+    taskList.addEventListener('click', function (e) {
+
+        if (e.target.classList.contains('btn--remove')) {
+            removeTaskbyId(e.target.dataset.id);
+            updateLocalStorage(tasks);
+            init(activeSortParameter);
+
+        } else if (e.target.classList.contains('list__task-title')) {
+
+            checkTaskById(e.target.parentNode.dataset.id);
+            updateLocalStorage(tasks);
+            init(activeSortParameter);
+
+
+        } else if (e.target.classList.contains('btn--edit')) {
+            e.target.parentNode.nextElementSibling.classList.add("show");
+
+            let openLightbox = document.querySelector('.list__task-edit.show');
+
+            if (openLightbox) {
+                openLightbox.addEventListener('click', function (e) {
+
+                    if (e.target.type === "reset") {
+                        openLightbox.classList.remove('show');
+                    }
+
+                    if (e.target.classList.contains('show')) {
+                        e.target.childNodes[1].reset();
+                        e.target.classList.remove('show');
+                    }
+                });
+            }
+        }
+    });
+
+    taskList.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (e.target.classList.contains('list-item__edit-form')) {
+            updateTask(e);
+            updateLocalStorage(tasks);
+            init(activeSortParameter);
+        }
+    });
 
     function init(sortParameter) {
         taskList.innerHTML = template(sortParameter);
 
-        // Add Event Listener
-        const forms = document.querySelectorAll('.list-item__edit-form');
-        forms.forEach((form) => {
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-                updateTask(event);
-                document.querySelector('body').classList.remove('edit');
+        if (getCookie('hideDone')) {
+            let allTasks = document.querySelectorAll('.list__task');
+            allTasks.forEach(function (task) {
+                if (task.dataset.state === "checked") {
+                    task.classList.add('hide');
+                }
             });
-        });
-
-        const removeButtons = document.querySelectorAll('.btn--remove');
-        removeButtons.forEach((button) => {
-            button.addEventListener("click", function (event) {
-
-                removeTask();
-                updateLocalStorage(tasks);
-                init(activeSortParameter);
-
-            })
-        });
-
-        const taskCheckDone = document.querySelectorAll('.list__task-done');
-        taskCheckDone.forEach( (taskCheck ) => {
-            taskCheck.addEventListener("click", function (event) {
-
-                // Search for ID
-                function CallbackFunctionToFindTaskById(task) {
-                    if (parseInt(task.id) === parseInt(event.target.dataset.id)) {
-                        console.log("Found ID");
-                        return parseInt(task.id) === parseInt(event.target.dataset.id);
-                    } else {
-                        console.log("Looking for ID")
-                    }
-                }
-
-                let task = tasks.find(CallbackFunctionToFindTaskById);
-
-                if (task.done === "checked") {
-                    task.done = "";
-                } else {
-                    task.done = "checked";
-                }
-
-                updateLocalStorage(tasks);
-                init(activeSortParameter);
-            })
-        });
-
-        const editButtons = document.querySelectorAll('.btn--edit');
-        editButtons.forEach((button) => {
-            button.addEventListener("click", function (event) {
-                console.log("Edit");
-
-                event.target.parentNode.nextElementSibling.classList.toggle("show");
-                document.querySelector('body').classList.add('edit');
-            })
-        });
-
-        const newTaskButton = document.querySelector('#js-add-task');
-        newTaskButton.addEventListener("click", function (event) {
-            event.target.parentNode.nextElementSibling.classList.add("show");
-        })
+        }
     }
 
     init(activeSortParameter);
 
 
-
-    // Sort
-    const navInbox = document.querySelector('.nav__item-inbox');
-    const navAllTasks = document.querySelector('.nav__item-all-tasks');
-    const navPrio = document.querySelector('.nav__item-prio');
-
-    navInbox.addEventListener("click", function(){
-        activeSortParameter = tasksSortedCreatedDate;
-        init(activeSortParameter);
-    });
-
-    navAllTasks.addEventListener("click", function(){
-        activeSortParameter = tasksSortedDueDate;
-        init(activeSortParameter);
-    });
-
-    navPrio.addEventListener("click", function(){
-        activeSortParameter = tasksSortedPrio;
-        init(activeSortParameter);
-    });
-
-
-    function updateTask(event) {
-
-        // Search for ID
-        function CallbackFunctionToFindTaskById(task) {
-
-
-            if (parseInt(task.id) === parseInt(event.target.dataset.id)) {
-                console.log("Found ID");
-                return parseInt(task.id) === parseInt(event.target.dataset.id);
-            } else {
-                console.log("Looking for ID")
-            }
-        }
-
-        let task = tasks.find(CallbackFunctionToFindTaskById);
-
-        task.title = event.target.title.value;
-        task.description = event.target.description.value;
-        task.dueDate = event.target.date.value;
-
-        if (event.target.prio1.checked === true) {
-            task.prio = 1;
-        } else if (event.target.prio2.checked === true) {
-            task.prio = 2;
-        } else if (event.target.prio3.checked === true) {
-            task.prio = 3;
-        } else if (event.target.prio4.checked === true) {
-            task.prio = 4;
-        } else if (event.target.prio5.checked === true) {
-            task.prio = 5;
-        } else {
-            task.prio = undefined;
-        }
-
-        updateLocalStorage(tasks);
-
-        init(activeSortParameter);
-    }
-
-
     // Add
     const addTaskForm = document.querySelector('#js-add-task-form');
 
-    addTaskForm.addEventListener("submit", function (event) {
-        event.preventDefault();
+    addTaskForm.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-        addTask(event);
+        addTask(e);
 
-        event.target.parentNode.classList.toggle("show");
-        document.querySelector('body').classList.remove('edit');
+        e.target.parentNode.classList.toggle("show");
         document.querySelector('#js-add-task').classList.remove("show");
 
         updateLocalStorage(tasks);
@@ -168,13 +138,29 @@ ready(function () {
     });
 
 
-    let changeStyle = document.querySelector("#js-change-style");
 
-    changeStyle.addEventListener('click', (event) => {
-       document.querySelector('body').classList.toggle('style-1');
+    // Sort
+    const nav = document.querySelector('.nav');
+    nav.addEventListener('click', function (e) {
+
+        if (e.target.classList.contains('nav__item-inbox')) {
+            activeSortParameter = tasksSortedCreatedDate;
+            init(activeSortParameter);
+        } else if (e.target.classList.contains('nav__item-all-tasks')) {
+            activeSortParameter = tasksSortedDueDate;
+            init(activeSortParameter);
+        } else if (e.target.classList.contains('nav__item-prio')) {
+            activeSortParameter = tasksSortedPrio;
+            init(activeSortParameter);
+        } else if (e.target.id === 'completedTasks') {
+            if (getCookie('hideDone')) {
+                deleteCookie('hideDone');
+            } else {
+                setCookie('hideDone', 'true', 356);
+            }
+            init(activeSortParameter);
+        }
     });
-
-
 });
 
 
@@ -186,3 +172,19 @@ function ready(cb) {
         document.addEventListener("DOMContentLoaded", cb);
     }
 }
+
+function setCookie(name, value, days) {
+    var d = new Date;
+    d.setTime(d.getTime() + 24*60*60*1000*days);
+    document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
+}
+
+function getCookie(name) {
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : null;
+}
+
+function deleteCookie(name) {
+    setCookie(name, '', -1);
+}
+

@@ -1,6 +1,7 @@
 .nav {
   background-color: $lightgrey;
   padding: rem(8px);
+  overflow: hidden;
   .nav__inner-wrap {
     @include ulreset();
     display: flex;
