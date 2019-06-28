@@ -4,9 +4,13 @@ const tasksContainer = document.querySelector("#tasksContainer");
 
 const tasksRenderer = Handlebars.compile(document.querySelector("#task-template").innerHTML);
 
+let sortBy = 'createdDate';
+let sortDirection = 'asc';
+let filtered = false;
 
-async function renderTasks() {
-    tasksContainer.innerHTML = tasksRenderer({tasks: await taskService.getTasks()});
+
+async function renderTasks(sortBy, sortDirection, filtered) {
+    tasksContainer.innerHTML = tasksRenderer({tasks: await taskService.getTasks(sortBy, sortDirection, filtered)});
 }
 
 document.getElementById('js-add-task-form').addEventListener('submit', async (e) => {
@@ -97,29 +101,44 @@ tasksContainer.addEventListener('click', async function (e) {
 const nav = document.querySelector('.nav');
 nav.addEventListener('click', function (e) {
 
+/*    let sortBy = '';
+    let sortDirection = 'asc';
+    let filtered = false;*/
+
+
     if (e.target.classList.contains('nav__item-inbox')) {
-        //activeSortParameter = Task.tasksSortedCreatedDate;
-        //init(activeSortParameter);
+        alert('Sort Inbox');
+        sortBy = 'createdDate';
+        renderTasks(sortBy, sortDirection, filtered);
+
     } else if (e.target.classList.contains('nav__item-all-tasks')) {
-        //activeSortParameter = Task.tasksSortedDueDate;
-        //init(activeSortParameter);
+        alert('Sort DueDate');
+        sortBy = 'dueDate';
+        renderTasks(sortBy, sortDirection, filtered);
+
     } else if (e.target.classList.contains('nav__item-prio')) {
-        //activeSortParameter = Task.tasksSortedPrio;
-        //init(activeSortParameter);
+        alert('Sort Prio');
+        sortBy = 'prio';
+        renderTasks(sortBy, sortDirection, filtered);
+
+
     } else if (e.target.id === 'completedTasks') {
-        if (getCookie('hideDone')) {
-            deleteCookie('hideDone');
+        alert('Filtern');
+
+        if (filtered === true) {
+            filtered = false;
         } else {
-            setCookie('hideDone', 'true', 356);
+            filtered = true;
         }
-        //init(activeSortParameter);
+        renderTasks(sortBy, sortDirection, filtered);
+
     }
 });
 
 
 
 function updateStatus() {
-    renderTasks();
+    renderTasks(sortBy, sortDirection, filtered);
 }
 
 

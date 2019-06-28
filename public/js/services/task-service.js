@@ -5,8 +5,18 @@ class TaskService {
         return await httpService.ajax("POST", "/tasks/", { name: formDataString });
     }
 
-    async getTasks() {
+/*    async getTasks(sortBy, sortDirection, filtered) {
         return await httpService.ajax("GET", "/tasks/", undefined);
+    }*/
+
+/*
+   async getTasks(sortBy, sortDirection, filtered) {
+        return await httpService.ajax("GET", `/tasks?sort="${sortBy}"`, undefined);
+    }
+*/
+
+    async getTasks(sortBy, sortDirection, filtered) {
+        return await httpService.getTasks(`${sortBy}`, `${sortDirection}`, `${filtered}`);
     }
 
     async getTask(id) {

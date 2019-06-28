@@ -3,7 +3,6 @@ import Datastore from 'nedb-promise'
 export class Task {
     constructor(object) {
 
-        this.id = 1;
         this.title = JSON.parse(object).title;
         this.state = "OK";
         this.description = JSON.parse(object).description;
@@ -48,9 +47,28 @@ export class TaskStore {
         return await this.db.findOne({_id: id});
     }
 
-    async all(currentUser) {
-        return await this.db.cfind({}).sort({ orderDate: -1 }).exec();
+    async all(sortBy = 'prio', sortDirection = 'asc', filtered = false ) {
+
+        let filterObject = {};
+
+        let sortObject = {};
+
+        if(sortDirection === 'asc') {
+            sortObject[sortBy] =  1;
+        } else if (sortDirection === 'desc') {
+            sortObject[sortBy] =  -1;
+        };
+
+        if (filtered === 'true') {
+            filterObject["done"] = true
+        };
+
+        return await this.db
+            .cfind(filterObject)
+            .sort(sortObject)
+            .exec();
     }
+
 }
 
 export const taskStore = new TaskStore();
