@@ -1,20 +1,21 @@
 import { Task } from '../x_model/task.js'
 
-
 "use strict";
-
-//let tasks = [];
-
-getDataFromLocalStorage();
 
 ready(function () {
 
     let activeSortParameter = Task.tasksSortedCreatedDate;
 
+
+    let tasks = getDataFromLocalStorage();
+    const ordersContainer = document.querySelector(".list");
+    const ordersRenderer = Handlebars.compile(document.querySelector("#list-template").innerHTML);
+    ordersContainer.innerHTML = ordersRenderer({tasks: tasks});
+
+
+    // TODO: Original COde index-controller 31
+
     // Handlebars
-    const templateSource = document.getElementById("list-template").innerHTML;
-    const template = Handlebars.compile(templateSource);
-    let taskList = document.querySelector(".list");
 
 
     let changeStyle = document.querySelector("#js-change-style");

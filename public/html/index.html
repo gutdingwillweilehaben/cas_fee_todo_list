@@ -1,4 +1,5 @@
 <!doctype html>
+<!doctype html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -15,12 +16,13 @@
     <script src="../js/x_utils/shared.js"></script>
 
     <script src="../js/x_data/data.js"></script>
+    <scrip src="../js/x_model/task.js"></scrip>
     <script src="../js/x_controllers/task-controller.js" type="module" defer></script>
 
 
     <script id="list-template" type="text/x-handlebars-template">
         <ul class="list__inner-wrap">
-            {{#each this}}
+            {{#each tasks}}
                 <li class="list__task" data-id="{{id}}" data-state="{{done}}">
                     <input id="done-{{id}}" data-id="{{id}}" type="checkbox" class="list__task-done" {{done}}>
                     <label for="done-{{id}}" class="list__task-title">{{title}}{{#if done}}<span class="list__task-completedDate">{{ formatDate completedDate}}</span>{{/if}}</label>

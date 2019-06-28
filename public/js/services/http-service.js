@@ -1,3 +1,6 @@
+// Ajax Implementierung
+
+
 import {valueStorage} from './value-storage.js'
 
 const tokenKey = "token";

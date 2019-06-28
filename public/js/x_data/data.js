@@ -9,9 +9,6 @@ function getDataFromLocalStorage() {
 
         tasks = JSON.parse(tasksFromLocalStorage);
 
-        updateLocalStorage(tasks);
-
-
     } else {
         tasks = [
             {
@@ -108,4 +105,6 @@ function getDataFromLocalStorage() {
 
         updateLocalStorage(tasks);
     }
+
+    return tasks;
 }
