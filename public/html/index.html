@@ -1,128 +1,122 @@
-<!doctype html>
-<!doctype html>
-<html lang="de">
-<head>
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Merriweather:300,300i,700,700i&display=swap" rel="stylesheet">
+    <title></title>
     <link rel="stylesheet" href="../css/styles.css">
-    <title>Todo Liste</title>
 
     <script src="../libs/moment-with-locales.js"></script>
-    <script src="../libs/handlebars-v4.0.5.js"></script>
-    <script src="../js/x_utils/handlebars-helpers.js"></script>
-    <script src="../js/x_utils/shared.js"></script>
-
-    <script src="../js/x_data/data.js"></script>
-    <scrip src="../js/x_model/task.js"></scrip>
-    <script src="../js/x_controllers/task-controller.js" type="module" defer></script>
-
-
-    <script id="list-template" type="text/x-handlebars-template">
-        <ul class="list__inner-wrap">
-            {{#each tasks}}
-                <li class="list__task" data-id="{{id}}" data-state="{{done}}">
-                    <input id="done-{{id}}" data-id="{{id}}" type="checkbox" class="list__task-done" {{done}}>
-                    <label for="done-{{id}}" class="list__task-title">{{title}}{{#if done}}<span class="list__task-completedDate">{{ formatDate completedDate}}</span>{{/if}}</label>
-                    {{#if description}}
-                        <span class="list__task-info" title="{{description}}">{{description}}</span>
-                    {{/if}}
-                    {{#if prio}}
-                        <span class="list__task-prio">{{prio}}</span>
-                    {{/if}}
-                    {{#if dueDate}}
-                        <span class="list__task-due-date">{{ formatCalendar dueDate }}</span>
-                    {{/if}}
-                    <button data-src="#task-{{id}}" class="btn btn--edit">Edit</button>
-                    <button data-id="{{id}}" class="btn btn--remove">Remove</button>
-                </li>
-
-                <div class="list__task-edit">
-                    <form method="post" class="list-item__edit-form" id="task-{{id}}" data-id="{{id}}">
-                        <fieldset class="list-item__title">
-                            <label for="title">Task-Titel</label>
-                            <input type="text" name="title" id="title" value={{title}}>
-                        </fieldset>
-                        <fieldset class="list-item__info">
-                            <label for="description">Beschreibung</label>
-                            <textarea name="description" id="description" rows="4">{{description}}</textarea>
-                        </fieldset>
-                        <fieldset class="list-item__prio">
-                            <label for="prio1">Priorität</label>
-                            <input type="radio" name="update-prio" id="prio1" value="1" {{{setChecked 1 prio}}}>
-                            <input type="radio" name="update-prio" id="prio2" value="2" {{{setChecked 2 prio}}}>
-                            <input type="radio" name="update-prio" id="prio3" value="3" {{{setChecked 3 prio}}}>
-                            <input type="radio" name="update-prio" id="prio4" value="4" {{{setChecked 4 prio}}}>
-                            <input type="radio" name="update-prio" id="prio5" value="5" {{{setChecked 5 prio}}}>
-                        </fieldset>
-                        <fieldset class="list-item__date">
-                            <label for="date">Erledigen bis</label>
-                            <input type="date" name="date" id="date" value="{{dueDate}}">
-                        </fieldset>
-
-                        <button type="submit" class="btn" value="Speichern">Aktualisieren</button>
-                        <button type="reset" class="btn">Abbrechen</button>
-                    </form>
-                </div>
-            {{/each}}
-        </ul>
-    </script>
-
+    <script src="../libs/handlebars-v4.0.5.js" defer></script>
+    <script src="../js/utils/handlebars-helpers.js" defer></script>
+    <script src="../js/utils/shared.js" defer></script>
+    <script src="../js/controllers/task-controller.js" type="module" defer></script>
+    <script src="../js/controllers/view-controller.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="header__title">Todo List</div>
-            <div class="header__change-style" id="js-change-style"></div>
-        </header>
-        <div class="content">
-            <nav class="nav">
-                <ul class="nav__inner-wrap">
-                    <li class="nav__item nav__item-inbox">Inbox</li>
-                    <li class="nav__item nav__item-all-tasks">Fälligkeit</li>
-                    <li class="nav__item nav__item-prio">Priorität</li>
-                    <li class="nav__item-show-down">
-                        <input type="checkbox" id="completedTasks" name="completedTasks" checked="checked">
-                        <label for="completedTasks">Erledigte Tasks anzeigen</label>
-                    </li>
-                </ul>
-            </nav>
 
-            <div class="list"></div>
-
-            <div class="btn--add-task" id="js-add-task"><img src="../img/icons/add-white.svg" alt="Add Task"></div>
-
-            <div class="add-task">
-                <form method="post" id="js-add-task-form" class="add-task-form">
-                    <fieldset class="list-item__title">
-                        <label for="title">Task-Titel*</label>
-                        <input type="text" name="title" id="new-title" value="" required>
-                    </fieldset>
-                    <fieldset class="list-item__info">
-                        <label for="description">Beschreibung</label>
-                        <textarea name="description" id="new-description"></textarea>
-                    </fieldset>
-                    <fieldset class="list-item__prio">
-                        <label for="prio1">Priorität</label>
-                        <input type="radio" name="prio" id="new-prio1" value="1">
-                        <input type="radio" name="prio" id="new-prio2" value="2">
-                        <input type="radio" name="prio" id="new-prio3" value="3">
-                        <input type="radio" name="prio" id="new-prio4" value="4">
-                        <input type="radio" name="prio" id="new-prio5" value="5">
-                    </fieldset>
-                    <fieldset class="list-item__date">
-                        <label for="date">Erledigen bis</label>
-                        <input type="date" name="date" id="new-date" value="">
-                    </fieldset>
-
-                    <button type="submit" class="btn" value="add">Hinzufügen</button>
-                    <button type="reset" class="btn">Abbrechen</button>
-                </form>
-            </div>
+<div class="container">
+    <header class="header">
+        <div class="header__title">Todo List à la Eisenhower</div>
+        <div class="header__change-style" id="js-change-style"></div>
+    </header>
+    <div class="content">
+        <nav class="nav">
+            <ul class="nav__inner-wrap">
+                <li class="nav__item nav__item-inbox">Inbox</li>
+                <li class="nav__item nav__item-all-tasks">Dringlich</li>
+                <li class="nav__item nav__item-prio">Wichtig</li>
+                <li class="nav__item-show-down">
+                    <input type="checkbox" id="completedTasks" name="completedTasks" checked="checked">
+                    <label for="completedTasks">Erledigte Tasks anzeigen</label>
+                </li>
+            </ul>
+        </nav>
+        <div class="list">
+            <div id="tasksContainer"></div>
         </div>
-        <footer class="footer">Cindy Gut – CAS FEE Projekt 1</footer>
+        <div class="btn--add-task" id="js-add-task"><img src="../img/icons/add-white.svg" alt="Add Task"></div>
+        <div class="add-task">
+            <form method="post" id="js-add-task-form" class="add-task-form">
+                </fieldset>
+                <fieldset class="list-item__title">
+                    <label for="new-title">Task-Titel*</label>
+                    <input type="text" name="title" id="new-title" value="" required>
+                </fieldset>
+                <fieldset class="list-item__info">
+                    <label for="new-description">Beschreibung</label>
+                    <textarea name="description" id="new-description"></textarea>
+                </fieldset>
+                <fieldset class="list-item__prio">
+                    <label for="new-prio1">Priorität</label>
+                    <input type="radio" name="prio" id="new-prio1" value="1">
+                    <input type="radio" name="prio" id="new-prio2" value="2">
+                    <input type="radio" name="prio" id="new-prio3" value="3">
+                    <input type="radio" name="prio" id="new-prio4" value="4">
+                    <input type="radio" name="prio" id="new-prio5" value="5">
+                </fieldset>
+                <fieldset class="list-item__date">
+                    <label for="new-date">Erledigen bis</label>
+                    <input type="date" name="dueDate" id="new-date" value="">
+                </fieldset>
+                <input class="btn btn-default" type="submit" value="Task hinzufügen" id="createTaskX">
+                <button type="reset" class="btn">Abbrechen</button>
+            </form>
+        </div>
     </div>
+    <footer class="footer">CAS FEE Projekt 1 – Cindy Gut</footer>
+</div>
+
+<!--Handlebars Template-->
+<script id="task-template" type="text/x-handlebars-template">
+    <ul class="list__inner-wrap">
+        {{#each tasks}}
+        <li class="list__task" data-id="{{id}}" data-state="{{done}}">
+            <input id="done-{{id}}" data-id="{{id}}" type="checkbox" class="list__task-done" {{done}}>
+            <label for="done-{{id}}" class="list__task-title">{{title}}{{#if done}}<span class="list__task-completedDate">{{ formatCompletedDate completedDate}}</span>{{/if}}</label>
+            {{#if description}}
+            <span class="list__task-info" title="{{description}}">{{description}}</span>
+            {{/if}}
+            {{#if prio}}
+            <span class="list__task-prio">{{prio}}</span>
+            {{/if}}
+            {{#if dueDate}}
+            <span class="list__task-due-date">{{ formatCalendar dueDate }}</span>
+            {{/if}}
+            <button data-src="#task-{{id}}" class="btn btn--edit">Edit</button>
+            <td>{{#ifCond state '===' 'OK'}}
+                <button data-id="{{_id}}" class="btn btn--remove">Remove</button>
+                {{/ifCond}}
+            </td>
+        </li>
+        <div class="list__task-edit">
+            <form method="post" class="list-item__edit-form" id="task-{{id}}" data-id="{{_id}}">
+                <fieldset class="list-item__title">
+                    <label for="title">Task-Titel</label>
+                    <input type="text" name="title" id="title" value={{title}}>
+                </fieldset>
+                <fieldset class="list-item__info">
+                    <label for="description">Beschreibung</label>
+                    <textarea name="description" id="description" rows="4">{{description}}</textarea>
+                </fieldset>
+                <fieldset class="list-item__prio">
+                    <label for="prio1">Priorität</label>
+                    <input type="radio" name="prio" id="prio1" value="1" {{{setChecked 1 prio}}}>
+                    <input type="radio" name="prio" id="prio2" value="2" {{{setChecked 2 prio}}}>
+                    <input type="radio" name="prio" id="prio3" value="3" {{{setChecked 3 prio}}}>
+                    <input type="radio" name="prio" id="prio4" value="4" {{{setChecked 4 prio}}}>
+                    <input type="radio" name="prio" id="prio5" value="5" {{{setChecked 5 prio}}}>
+                </fieldset>
+                <fieldset class="list-item__date">
+                    <label for="dueDate">Erledigen bis</label>
+                    <input type="date" name="dueDate" id="dueDate" value="{{formatForDateInput dueDate}}">
+                </fieldset>
+                <button type="submit" class="btn" value="Speichern">Aktualisieren</button>
+                <button type="reset" class="btn">Abbrechen</button>
+            </form>
+        </div>
+        {{/each}}
+    </ul>
+</script>
+
 </body>
 </html>

@@ -1,0 +1,5 @@
+{"id":1,"title":"Kirschen","state":"OK","description":"10kg, Sorte Kordia","prio":"4","done":"","createdDate":{"$$date":1561719056878},"dueDate":{"$$date":1561852800000},"_id":"83frl78I7Dspj1Ud"}
+{"id":1,"title":"Äpfel","state":"OK","description":"Sorte Boskoop","prio":"2","done":"","createdDate":{"$$date":1561719134306},"dueDate":{"$$date":1566691200000},"_id":"hIsJH7VbEZXPUFHb"}
+{"id":1,"title":"Erdbeeren","state":"OK","description":"2. Klasse für Konfitüre","prio":"5","done":"","createdDate":{"$$date":1561719186756},"dueDate":{"$$date":1561680000000},"_id":"jeQkq1I6YWelNiqe"}
+{"id":1,"title":"Eier","state":"OK","description":"ganz frisch","prio":"5","done":"","createdDate":{"$$date":1561719161148},"dueDate":{"$$date":1562803200000},"_id":"lgbY7NFUTlKE57wj"}
+{"id":1,"title":"Kartoffeln","state":"OK","description":"ungewaschen","prio":"5","done":"","createdDate":{"$$date":1561719074411},"dueDate":{"$$date":1562889600000},"_id":"qXX7ItcwWNDMyCD2"}

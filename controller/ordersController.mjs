@@ -1,22 +1,21 @@
 import {orderStore} from '../services/orderStore'
-import {SecurityUtil} from '../utils/security'
 
 export class OrdersController {
 
     async getOrders(req, res) {
-        res.json((await orderStore.all(SecurityUtil.currentUser(req)) || []))
+        res.json((await orderStore.all() || []))
     };
 
     async createPizza(req, res) {
-        res.json(await orderStore.add(req.body.name, SecurityUtil.currentUser(req)));
+        res.json(await orderStore.add(req.body.name));
     };
 
     async showOrder(req, res) {
-        res.json(await orderStore.get(req.params.id, SecurityUtil.currentUser(req)));
+        res.json(await orderStore.get(req.params.id));
     };
 
     async deleteOrder(req, res) {
-        res.json(await orderStore.delete(req.params.id, SecurityUtil.currentUser(req)));
+        res.json(await orderStore.delete(req.params.id));
     };
 }
 
