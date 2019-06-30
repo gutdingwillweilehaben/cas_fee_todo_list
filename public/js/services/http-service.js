@@ -16,22 +16,6 @@ class HttpService {
             return x.json();
         });
     }
-
-    async getTasks(sortBy, sortDirection, filtered) {
-
-        let url = `/tasks?sort=${sortBy}:${sortDirection}`;
-
-        if (filtered === 'true') {
-            url += '&filtered=true'
-        }
-
-        console.log(url);
-
-        let response = await fetch(url);
-        return await response.json()
-    }
 }
-
-
 
 export const httpService = new HttpService();

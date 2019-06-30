@@ -7,7 +7,7 @@ export class Task {
         this.state = "OK";
         this.description = JSON.parse(object).description;
         this.prio = JSON.parse(object).prio;
-        this.done = "";
+        this.done = false;
         this.createdDate = new Date();
         this.dueDate = new Date(JSON.parse(object).dueDate);
         this.completedDate = JSON.parse(object).completedDate;

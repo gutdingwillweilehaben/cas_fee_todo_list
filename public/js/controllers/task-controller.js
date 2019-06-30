@@ -24,9 +24,6 @@ document.getElementById('js-add-task-form').addEventListener('submit', async (e)
 
     const formDataString = JSON.stringify(data);
 
-    //alert(formDataString);
-    //console.dir(JSON.parse(formDataString));
-
     document.querySelector('.add-task').classList.remove("show");
     document.getElementById('js-add-task-form').reset();
 
@@ -38,7 +35,6 @@ tasksContainer.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     if (e.target.classList.contains('list-item__edit-form')) {
-        console.log('TEST');
 
         const formData = new FormData(e.target);
         const data = Array.from(formData.entries()).reduce((memo, pair) => ({
@@ -48,16 +44,10 @@ tasksContainer.addEventListener('submit', async function (e) {
 
         const formDataString = JSON.stringify(data);
 
-        //alert(formDataString);
-        //console.dir(JSON.parse(formDataString));
-
         await taskService.updateTask(e.target.dataset.id, formDataString);
         renderTasks();
     }
 });
-
-
-
 
 // Event-Bubbling
 tasksContainer.addEventListener('click', async function (e) {
@@ -95,35 +85,25 @@ tasksContainer.addEventListener('click', async function (e) {
     }
 });
 
-
-
 // Sort
 const nav = document.querySelector('.nav');
 nav.addEventListener('click', function (e) {
 
-/*    let sortBy = '';
-    let sortDirection = 'asc';
-    let filtered = false;*/
-
-
     if (e.target.classList.contains('nav__item-inbox')) {
-        alert('Sort Inbox');
         sortBy = 'createdDate';
         renderTasks(sortBy, sortDirection, filtered);
 
     } else if (e.target.classList.contains('nav__item-all-tasks')) {
-        alert('Sort DueDate');
         sortBy = 'dueDate';
         renderTasks(sortBy, sortDirection, filtered);
 
     } else if (e.target.classList.contains('nav__item-prio')) {
-        alert('Sort Prio');
         sortBy = 'prio';
+        let sortDirection = 'desc';
         renderTasks(sortBy, sortDirection, filtered);
 
 
     } else if (e.target.id === 'completedTasks') {
-        alert('Filtern');
 
         if (filtered === true) {
             filtered = false;
@@ -131,15 +111,12 @@ nav.addEventListener('click', function (e) {
             filtered = true;
         }
         renderTasks(sortBy, sortDirection, filtered);
-
     }
 });
-
 
 
 function updateStatus() {
     renderTasks(sortBy, sortDirection, filtered);
 }
-
 
 updateStatus();

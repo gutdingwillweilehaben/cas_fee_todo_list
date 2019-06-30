@@ -27,8 +27,6 @@ ordersContainer.addEventListener("click", async function (event) {
 });
 
 function updateStatus() {
-    // Array.from(document.querySelectorAll(".js-non-user")).forEach(x=>x.classList.toggle("hidden", authService.isLoggedIn()))
-    // Array.from(document.querySelectorAll(".js-user")).forEach(x=>x.classList.toggle("hidden", !authService.isLoggedIn()))
     renderOrders();
 }
 
