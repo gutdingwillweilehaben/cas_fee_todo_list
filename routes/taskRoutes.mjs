@@ -7,5 +7,6 @@ router.post("/", tasksController.createTask.bind(tasksController));
 router.get("/:id/", tasksController.getTask.bind(tasksController));
 router.put("/:id/", tasksController.updateTask.bind(tasksController));
 router.delete("/:id/", tasksController.deleteTask.bind(tasksController));
+router.put("/:id/", tasksController.checkTask.bind(tasksController));
 
 export const taskRoutes = router;

@@ -1,4 +1,4 @@
-{"title":"Äpfel","state":"OK","description":"Sorte Boskoop","prio":"2","done":false,"createdDate":{"$$date":1561719134306},"dueDate":{"$$date":1566691200000},"_id":"hIsJH7VbEZXPUFHb"}
-{"title":"Erdbeeren","state":"OK","description":"2. Klasse für Konfitüre","prio":"5","done":true,"createdDate":{"$$date":1561719186756},"dueDate":{"$$date":1561680000000},"_id":"jeQkq1I6YWelNiqe"}
-{"title":"Eier","state":"OK","description":"ganz frisch","prio":"5","done":true,"createdDate":{"$$date":1561719161148},"dueDate":{"$$date":1562803200000},"_id":"lgbY7NFUTlKE57wj"}
-{"title":"Kartoffeln","state":"OK","description":"ungewaschen","prio":"5","done":true,"createdDate":{"$$date":1561719074411},"dueDate":{"$$date":1562889600000},"_id":"qXX7ItcwWNDMyCD2"}
+{"title":"Bike vom Service abholen","description":"IBEX","prio":"5","done":false,"createdDate":{"$$date":1561923629401},"dueDate":{"$$date":1561852800000},"completedDate":null,"_id":"AhYjQ0IzpcceP0h6"}
+{"title":"Äpfel","description":"Sorte Boskoop","prio":"2","done":false,"createdDate":{"$$date":1561719134306},"dueDate":{"$$date":1566691200000},"completedDate":null,"_id":"hIsJH7VbEZXPUFHb"}
+{"title":"Erdbeeren","description":"2. Klasse für Konfitüre","prio":"4","done":true,"createdDate":{"$$date":1561719186756},"dueDate":{"$$date":1561680000000},"completedDate":null,"_id":"jeQkq1I6YWelNiqe"}
+{"title":"Eier","description":"ganz frisch","prio":"5","done":true,"createdDate":{"$$date":1561719161148},"dueDate":{"$$date":1562803200000},"completedDate":null,"_id":"lgbY7NFUTlKE57wj"}

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="../css/styles.css">
-
     <script src="../libs/moment-with-locales.js"></script>
     <script src="../libs/handlebars-v4.0.5.js" defer></script>
     <script src="../js/utils/handlebars-helpers.js" defer></script>
@@ -84,16 +83,13 @@
             <span class="list__task-due-date">{{ formatCalendar dueDate }}</span>
             {{/if}}
             <button data-src="#task-{{id}}" class="btn btn--edit">Edit</button>
-            <td>{{#ifCond state '===' 'OK'}}
-                <button data-id="{{_id}}" class="btn btn--remove">Remove</button>
-                {{/ifCond}}
-            </td>
+            <button data-id="{{_id}}" class="btn btn--remove">Remove</button>
         </li>
         <div class="list__task-edit">
             <form method="post" class="list-item__edit-form" id="task-{{id}}" data-id="{{_id}}">
                 <fieldset class="list-item__title">
                     <label for="title">Task-Titel</label>
-                    <input type="text" name="title" id="title" value={{title}}>
+                    <input type="text" name="title" id="title" value="{{title}}">
                 </fieldset>
                 <fieldset class="list-item__info">
                     <label for="description">Beschreibung</label>
@@ -118,6 +114,5 @@
         {{/each}}
     </ul>
 </script>
-
 </body>
 </html>

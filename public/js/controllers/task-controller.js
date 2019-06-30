@@ -1,13 +1,7 @@
 import { taskService } from '../services/task-service.js'
 
 const tasksContainer = document.querySelector("#tasksContainer");
-
 const tasksRenderer = Handlebars.compile(document.querySelector("#task-template").innerHTML);
-
-let sortBy = 'createdDate';
-let sortDirection = 'asc';
-let filtered = false;
-
 
 async function renderTasks(sortBy, sortDirection, filtered) {
     tasksContainer.innerHTML = tasksRenderer({tasks: await taskService.getTasks(sortBy, sortDirection, filtered)});
@@ -28,7 +22,7 @@ document.getElementById('js-add-task-form').addEventListener('submit', async (e)
     document.getElementById('js-add-task-form').reset();
 
     await taskService.createTask(formDataString);
-    renderTasks();
+    renderTasks(sortBy, sortDirection, filtered);
 });
 
 tasksContainer.addEventListener('submit', async function (e) {
@@ -45,26 +39,33 @@ tasksContainer.addEventListener('submit', async function (e) {
         const formDataString = JSON.stringify(data);
 
         await taskService.updateTask(e.target.dataset.id, formDataString);
-        renderTasks();
+        renderTasks(sortBy, sortDirection, filtered);
     }
 });
 
-// Event-Bubbling
 tasksContainer.addEventListener('click', async function (e) {
-
     if (e.target.classList.contains('btn--remove')) {
 
         await taskService.deleteTask(e.target.dataset.id);
-        await renderTasks();
+        renderTasks(sortBy, sortDirection, filtered);
 
     } else if (e.target.classList.contains('list__task-title')) {
 
-        checkTaskById(e.target.parentNode.dataset.id);
-        updateLocalStorage(tasks);
-        init(activeSortParameter);
+        let checked = false;
+
+         if (e.target.previousElementSibling.checked === true) {
+             checked = false;
+         } else if (e.target.previousElementSibling.checked === false) {
+             checked = true;
+         }
+
+         console.log(`Es ist checked? : ${checked}`);
+         await taskService.checkTask(e.target.dataset.id, checked);
+        //renderTasks(sortBy, sortDirection, filtered);
 
 
     } else if (e.target.classList.contains('btn--edit')) {
+
         e.target.parentNode.nextElementSibling.classList.add("show");
 
         let openLightbox = document.querySelector('.list__task-edit.show');
@@ -85,7 +86,11 @@ tasksContainer.addEventListener('click', async function (e) {
     }
 });
 
-// Sort
+
+let sortBy = 'createdDate';
+let sortDirection = 'asc';
+let filtered = true;
+
 const nav = document.querySelector('.nav');
 nav.addEventListener('click', function (e) {
 
@@ -102,18 +107,11 @@ nav.addEventListener('click', function (e) {
         let sortDirection = 'desc';
         renderTasks(sortBy, sortDirection, filtered);
 
-
     } else if (e.target.id === 'completedTasks') {
-
-        if (filtered === true) {
-            filtered = false;
-        } else {
-            filtered = true;
-        }
+        filtered ? filtered = false : filtered = true;
         renderTasks(sortBy, sortDirection, filtered);
     }
 });
-
 
 function updateStatus() {
     renderTasks(sortBy, sortDirection, filtered);

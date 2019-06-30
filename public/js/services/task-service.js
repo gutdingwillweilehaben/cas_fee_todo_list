@@ -20,6 +20,12 @@ class TaskService {
     async deleteTask(id) {
         return await httpService.ajax("DELETE", `/tasks/${id}`, undefined);
     }
+
+    async checkTask(id, checked) {
+        console.log(`task-service:  ${checked}`);
+
+        return await httpService.ajax("PUT", `/tasks/${id}`, { name: checked });
+    }
 }
 
 export const taskService = new TaskService();

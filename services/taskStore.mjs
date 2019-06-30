@@ -4,13 +4,12 @@ export class Task {
     constructor(object) {
 
         this.title = JSON.parse(object).title;
-        this.state = "OK";
         this.description = JSON.parse(object).description;
         this.prio = JSON.parse(object).prio;
         this.done = false;
         this.createdDate = new Date();
         this.dueDate = new Date(JSON.parse(object).dueDate);
-        this.completedDate = JSON.parse(object).completedDate;
+        this.completedDate = null;
     }
 }
 
@@ -25,7 +24,18 @@ export class TaskStore {
     }
 
     async delete(id) {
-        await this.db.update({_id: id}, {$set: {"state": "DELETED"}});
+        await this.db.remove({_id: id});
+        return await this.get(id);
+    }
+
+    async check(id, checked) {
+        await this.db.update({_id: id},
+            {$set:
+                    {
+                        "done": JSON.parse(checked).name,
+                        "completedDate": new Date(),
+                    }
+            });
         return await this.get(id);
     }
 
@@ -60,7 +70,7 @@ export class TaskStore {
         };
 
         if (filtered === 'true') {
-            filterObject["done"] = true
+            filterObject["done"] = false
         };
 
         return await this.db
