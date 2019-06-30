@@ -70,9 +70,10 @@
 <script id="task-template" type="text/x-handlebars-template">
     <ul class="list__inner-wrap">
         {{#each tasks}}
-        <li class="list__task" data-id="{{id}}" data-state="{{done}}">
-            <input id="done-{{id}}" data-id="{{id}}" type="checkbox" class="list__task-done" {{done}}>
-            <label for="done-{{id}}" class="list__task-title">{{title}}{{#if done}}<span class="list__task-completedDate">{{ formatCompletedDate completedDate}}</span>{{/if}}</label>
+
+        <li class="list__task">
+            <input id="{{_id}}" data-id="{{_id}}" type="checkbox" class="list__task-done" {{#if done}} checked="checked" {{/if}}>
+            <label for="{{_id}}" class="list__task-title">{{title}}{{#if done}}<span class="list__task-completedDate">{{ formatCompletedDate completedDate}}</span>{{/if}}</label>
             {{#if description}}
             <span class="list__task-info" title="{{description}}">{{description}}</span>
             {{/if}}

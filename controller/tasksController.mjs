@@ -4,7 +4,6 @@ export class TasksController {
 
     async getTasks(req, res) {
         console.log('req.query.sort', req.query.sort);
-
         res.json((await taskStore.all(req.query.sort, req.query.sortDirection, req.query.filtered, )));
     };
 

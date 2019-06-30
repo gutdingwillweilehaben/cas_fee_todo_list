@@ -4,9 +4,6 @@ class HttpService {
     ajax(method, url, data, headers) {
         const fetchHeaders = new Headers({'content-type': 'application/json', ...(headers || {})});
 
-
-        console.log(url);
-
         return fetch(url, {
             method: method,
             headers: fetchHeaders,
