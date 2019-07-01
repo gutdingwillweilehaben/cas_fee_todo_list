@@ -1,3 +1,3 @@
-{"title":"Äpfel","description":"Sorte Boskoop","prio":"2","createdDate":{"$$date":1561719134306},"dueDate":{"$$date":1566691200000},"completedDate":{"$$date":1561926992658},"_id":"hIsJH7VbEZXPUFHb","done":false}
+{"title":"Äpfel","description":"Sorte Boskoop","prio":"2","createdDate":{"$$date":1561719134306},"dueDate":{"$$date":1566691200000},"completedDate":{"$$date":1561975515138},"_id":"hIsJH7VbEZXPUFHb","done":true}
 {"title":"Erdbeeren","description":"2. Klasse für Konfitüre","prio":"4","done":false,"createdDate":{"$$date":1561719186756},"dueDate":{"$$date":1561680000000},"completedDate":{"$$date":1561926974391},"_id":"jeQkq1I6YWelNiqe"}
 {"title":"Eier","description":"ganz frisch","prio":"5","done":false,"createdDate":{"$$date":1561719161148},"dueDate":{"$$date":1562803200000},"completedDate":{"$$date":1561926975951},"_id":"lgbY7NFUTlKE57wj"}

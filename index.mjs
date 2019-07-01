@@ -3,10 +3,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 
-import {indexRoutes} from './routes/indexRoutes';
-import {orderRoutes} from './routes/orderRoutes';
 import {taskRoutes} from './routes/taskRoutes';
-
 
 const app = express();
 
@@ -22,11 +19,7 @@ app.get("/", function(req, res){
     res.sendFile("/html/index.html",  {root: __dirname + '/public/'});
 });
 
-
-app.use("/", indexRoutes);
-app.use("/orders", orderRoutes);
 app.use("/tasks", taskRoutes);
-
 
 
 app.use(function (err, req, res, next) {

@@ -8,19 +8,15 @@ ready(function () {
     changeStyle.addEventListener('click', (e) => {
         if (body.classList.contains("style-1")) {
             body.classList.remove('style-1');
-            deleteCookie('style');
+            setItemInLocalStorage('style');
         } else {
             body.classList.add('style-1');
-            setCookie('style', 'style1', 10);
+            setItemInLocalStorage('style', 'style1');
         }
     });
 
-    if (getCookie('style')) {
+    if (getItemOutOfLoacalStroage('style')) {
         body.classList.add('style-1');
-    }
-
-    if (getCookie('hideDone')) {
-        document.getElementById('completedTasks').checked = false;
     }
 
     const newTaskButton = document.querySelector('#js-add-task');
@@ -43,8 +39,6 @@ ready(function () {
                 }
             });
         }
-
     });
-
 });
 

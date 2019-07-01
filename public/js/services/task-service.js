@@ -5,8 +5,8 @@ class TaskService {
         return await httpService.ajax("POST", "/tasks/", { name: formDataString });
     }
 
-    async getTasks(sortBy, sortDirection, filtered) {
-        return await httpService.ajax("GET", `/tasks?sort=${sortBy}&sortDirection=${sortDirection}&filtered=${filtered}`);
+    async getTasks(sortBy1, sortDirection, filtered) {
+        return await httpService.ajax("GET", `/tasks?sort=${sortBy1}&sortDirection=${sortDirection}&filtered=${filtered}`);
     }
 
     async getTask(id) {
@@ -21,10 +21,8 @@ class TaskService {
         return await httpService.ajax("DELETE", `/tasks/${id}`, undefined);
     }
 
-    async checkTask(id, checked) {
-        console.log(`task-service:  ${checked}`);
-
-        return await httpService.ajax("PUT", `/tasks/${id}`, { name: checked });
+    async toggleTask(id, checked) {
+        return await httpService.ajax("PUT", `/tasks/toggle/${id}`, { name: checked });
     }
 }
 

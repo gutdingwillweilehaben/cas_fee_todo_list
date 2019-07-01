@@ -3,7 +3,6 @@ import {taskStore} from '../services/taskStore'
 export class TasksController {
 
     async getTasks(req, res) {
-        console.log('req.query.sort', req.query.sort);
         res.json((await taskStore.all(req.query.sort, req.query.sortDirection, req.query.filtered, )));
     };
 
@@ -19,14 +18,11 @@ export class TasksController {
         res.json(await taskStore.put(req.params.id, req.body.name));
     };
 
-    async checkTask(req, res) {
-        console.log(`tasksController: ${req.body.name}`);
-        res.json(await taskStore.check(req.params.id, req.body.name));
-
+    async toggleTask(req, res) {
+        res.json(await taskStore.toggle(req.params.id, req.body.name));
     };
 
     async deleteTask(req, res) {
-        console.log(`deleteTask: ${req.params.id}`);
         res.json(await taskStore.delete(req.params.id));
     };
 }

@@ -28,7 +28,7 @@ export class TaskStore {
         return await this.get(id);
     }
 
-    async check(id, checked) {
+    async toggle(id, checked) {
         await this.db.update({_id: id},
             {$set:
                     {
@@ -47,7 +47,6 @@ export class TaskStore {
                         "description": JSON.parse(object).description,
                         "dueDate": new Date(JSON.parse(object).dueDate),
                         "prio": JSON.parse(object).prio,
-
                     }
             });
         return await this.get(id);
@@ -57,7 +56,7 @@ export class TaskStore {
         return await this.db.findOne({_id: id});
     }
 
-    async all(sortBy = 'prio', sortDirection = 'asc', filtered = false ) {
+    async all(sortBy = 'createdDate', sortDirection = 'asc', filtered = false ) {
 
         let filterObject = {};
 
@@ -67,11 +66,11 @@ export class TaskStore {
             sortObject[sortBy] =  1;
         } else if (sortDirection === 'desc') {
             sortObject[sortBy] =  -1;
-        };
+        }
 
         if (filtered === 'true') {
             filterObject["done"] = false
-        };
+        }
 
         return await this.db
             .cfind(filterObject)
