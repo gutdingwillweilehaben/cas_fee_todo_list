@@ -5,8 +5,8 @@ class TaskService {
         return await httpService.ajax("POST", "/tasks/", { name: formDataString });
     }
 
-    async getTasks(sortBy1, sortDirection, filtered) {
-        return await httpService.ajax("GET", `/tasks?sort=${sortBy1}&sortDirection=${sortDirection}&filtered=${filtered}`);
+    async getTasks(sortBy, sortDirection, filtered) {
+        return await httpService.ajax("GET", `/tasks?sort=${sortBy}&sortDirection=${sortDirection}&filtered=${filtered}`);
     }
 
     async getTask(id) {

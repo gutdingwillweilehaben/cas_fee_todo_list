@@ -3,8 +3,8 @@ import { taskService } from '../services/task-service.js'
 const tasksContainer = document.querySelector("#tasksContainer");
 const tasksRenderer = Handlebars.compile(document.querySelector("#task-template").innerHTML);
 
-async function renderTasks(sortBy1, sortDirection, filtered) {
-    tasksContainer.innerHTML = tasksRenderer({tasks: await taskService.getTasks(sortBy1, sortDirection, filtered)});
+async function renderTasks(sortBy, sortDirection, filtered) {
+    tasksContainer.innerHTML = tasksRenderer({tasks: await taskService.getTasks(sortBy, sortDirection, filtered)});
 }
 
 document.getElementById('js-add-task-form').addEventListener('submit', async (e) => {
@@ -22,7 +22,7 @@ document.getElementById('js-add-task-form').addEventListener('submit', async (e)
     document.getElementById('js-add-task-form').reset();
 
     await taskService.createTask(formDataString);
-    renderTasks(sortBy1, sortDirection, filtered);
+    renderTasks(sortBy, sortDirection, filtered);
 });
 
 
@@ -40,7 +40,7 @@ tasksContainer.addEventListener('submit', async function (e) {
         const formDataString = JSON.stringify(data);
 
         await taskService.updateTask(e.target.dataset.id, formDataString);
-        renderTasks(sortBy1, sortDirection, filtered);
+        renderTasks(sortBy, sortDirection, filtered);
     }
 });
 
@@ -49,7 +49,7 @@ tasksContainer.addEventListener('click', async function (e) {
     if (e.target.classList.contains('btn--remove')) {
 
         await taskService.deleteTask(e.target.dataset.id);
-        renderTasks(sortBy1, sortDirection, filtered);
+        renderTasks(sortBy, sortDirection, filtered);
 
     } else if (e.target.classList.contains('list__task-title')) {
 
@@ -62,7 +62,7 @@ tasksContainer.addEventListener('click', async function (e) {
          }
 
          await taskService.toggleTask(e.target.dataset.id, checked);
-         renderTasks(sortBy1, sortDirection, filtered);
+         renderTasks(sortBy, sortDirection, filtered);
 
 
     } else if (e.target.classList.contains('btn--edit')) {
@@ -88,7 +88,7 @@ tasksContainer.addEventListener('click', async function (e) {
 });
 
 
-let sortBy1 = 'createdDate';
+let sortBy = 'createdDate';
 let sortDirection = 'asc';
 let filtered = true;
 
@@ -96,26 +96,26 @@ const nav = document.querySelector('.nav');
 nav.addEventListener('click', function (e) {
 
     if (e.target.classList.contains('nav__item-inbox')) {
-        sortBy1 = 'createdDate';
-        renderTasks(sortBy1, sortDirection, filtered);
+        sortBy = 'createdDate';
+        renderTasks(sortBy, sortDirection, filtered);
 
     } else if (e.target.classList.contains('nav__item-all-tasks')) {
-        sortBy1 = 'dueDate';
-        renderTasks(sortBy1, sortDirection, filtered);
+        sortBy = 'dueDate';
+        renderTasks(sortBy, sortDirection, filtered);
 
     } else if (e.target.classList.contains('nav__item-prio')) {
-        sortBy1 = 'prio';
+        sortBy = 'prio';
         let sortDirection = 'desc';
-        renderTasks(sortBy1, sortDirection, filtered);
+        renderTasks(sortBy, sortDirection, filtered);
 
     } else if (e.target.id === 'completedTasks') {
         filtered ? filtered = false : filtered = true;
-        renderTasks(sortBy1, sortDirection, filtered);
+        renderTasks(sortBy, sortDirection, filtered);
     }
 });
 
 function updateStatus() {
-    renderTasks(sortBy1, sortDirection, filtered);
+    renderTasks(sortBy, sortDirection, filtered);
 }
 
 updateStatus();
