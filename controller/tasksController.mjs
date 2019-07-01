@@ -22,6 +22,7 @@ export class TasksController {
     async checkTask(req, res) {
         console.log(`tasksController: ${req.body.name}`);
         res.json(await taskStore.check(req.params.id, req.body.name));
+
     };
 
     async deleteTask(req, res) {

@@ -32,7 +32,7 @@ export class TaskStore {
         await this.db.update({_id: id},
             {$set:
                     {
-                        "done": JSON.parse(checked).name,
+                        "done": JSON.parse(checked),
                         "completedDate": new Date(),
                     }
             });
