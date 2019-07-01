@@ -72,7 +72,7 @@
 
         <li class="list__task">
             <input id="{{_id}}" data-id="{{_id}}" type="checkbox" class="list__task-done" {{#if done}} checked="checked" {{/if}}>
-            <label for="{{_id}}" class="list__task-title">{{title}}{{#if done}}<span class="list__task-completedDate">{{ formatCompletedDate completedDate}}</span>{{/if}}</label>
+            <label for="{{_id}}" class="list__task-title" data-id="{{_id}}">{{title}}{{#if done}}<span class="list__task-completedDate">{{ formatCompletedDate completedDate}}</span>{{/if}}</label>
             {{#if description}}
             <span class="list__task-info" title="{{description}}">{{description}}</span>
             {{/if}}
@@ -82,7 +82,11 @@
             {{#if dueDate}}
             <span class="list__task-due-date">{{ formatCalendar dueDate }}</span>
             {{/if}}
-            <button data-src="#task-{{id}}" class="btn btn--edit">Edit</button>
+            <td>{{#ifCond done '===' false}}
+                <button data-src="#task-{{id}}" class="btn btn--edit">Edit</button>
+                {{/ifCond}}
+            </td>
+
             <button data-id="{{_id}}" class="btn btn--remove">Remove</button>
         </li>
         <div class="list__task-edit">
