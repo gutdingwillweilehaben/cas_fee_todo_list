@@ -88,7 +88,7 @@ tasksContainer.addEventListener('click', async function (e) {
 });
 
 
-let sortBy = 'createdDate';
+let sortBy = 'prio';
 let sortDirection = 'asc';
 let filtered = true;
 
@@ -97,17 +97,16 @@ nav.addEventListener('click', function (e) {
 
     if (e.target.classList.contains('nav__item-inbox')) {
         sortBy = 'createdDate';
+        sortDirection = 'asc';
         renderTasks(sortBy, sortDirection, filtered);
-
     } else if (e.target.classList.contains('nav__item-all-tasks')) {
         sortBy = 'dueDate';
+        sortDirection = 'asc';
         renderTasks(sortBy, sortDirection, filtered);
-
     } else if (e.target.classList.contains('nav__item-prio')) {
         sortBy = 'prio';
-        let sortDirection = 'desc';
+        sortDirection = 'desc';
         renderTasks(sortBy, sortDirection, filtered);
-
     } else if (e.target.id === 'completedTasks') {
         filtered ? filtered = false : filtered = true;
         renderTasks(sortBy, sortDirection, filtered);

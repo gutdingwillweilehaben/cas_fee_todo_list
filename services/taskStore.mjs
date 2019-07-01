@@ -68,7 +68,7 @@ export class TaskStore {
             sortObject[sortBy] =  -1;
         }
 
-        if (filtered === 'true') {
+        if (filtered === 'false') {
             filterObject["done"] = false
         }
 
